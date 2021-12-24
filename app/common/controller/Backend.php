@@ -12,6 +12,7 @@ use think\facade\Lang;
 use think\facade\Event;
 use think\facade\Session;
 use think\facade\View;
+use think\facade\Request;
 use think\exception\ValidateException;
 
 
@@ -124,14 +125,11 @@ class Backend extends BaseController
     public function initialize()
     {
         parent::initialize();
-        $controller = parse_name($this->request->controller(),1);
-        $controller = strtolower($controller);
-        
-        //$modulename = $this->request->module();
-        /*$controllername = Loader::parseName($this->request->controller());
-        $actionname = strtolower($this->request->action());
 
-        $path = str_replace('.', '/', $controllername) . '/' . $actionname;*/
+        $modulename = app('http')->getName();//模块名
+        $controllername = Request::controller(true);//控制器名
+        $actionname = Request::action(true);//方法名
+        $path = str_replace('.', '/', $controllername) . '/' . $actionname;
 
         // 定义是否Addtabs请求
         !defined('IS_ADDTABS') && define('IS_ADDTABS', input("addtabs") ? true : false);
@@ -193,13 +191,13 @@ class Backend extends BaseController
             $breadcrumb = $this->auth->getBreadCrumb($path);
             array_pop($breadcrumb);
         }
-        $this->view->breadcrumb = $breadcrumb;
+        $this->view->breadcrumb = $breadcrumb;*/
 
         // 如果有使用模板布局
         if ($this->layout) {
-            $this->view->engine->layout('layout/' . $this->layout);
+            app()->view->engine()->layout("layout/".$this->layout);
         }
-
+/*
         // 语言检测
         $lang = strip_tags($this->request->langset());
 
@@ -213,15 +211,15 @@ class Backend extends BaseController
 
         // 上传信息配置后
         Event::trigger('upload_config_init', $upload);
-
+        
         // 配置信息
         $config = [
             'site'           => array_intersect_key($site, array_flip(['name', 'indexurl', 'cdnurl', 'version', 'timezone', 'languages'])),
             'upload'         => $upload,
-            // 'modulename'     => $modulename,
-            //'controllername' => $controllername,
-            //'actionname'     => $actionname,
-            //'jsname'         => 'backend/' . str_replace('.', '/', $controllername),
+            'modulename'     => $modulename,
+            'controllername' => $controllername,
+            'actionname'     => $actionname,
+            'jsname'         => $this->js_file_exists($controllername)?'backend/' . str_replace('.', '/', $controllername):"",
             //'moduleurl'      => rtrim(url("/{$modulename}", '', false), '/'),
             'language'       => $lang,
             'referer'        => Session::get("referer")
@@ -253,6 +251,15 @@ class Backend extends BaseController
     public function verify()
     {
         return Captcha::create();
+    }
+
+    /**
+     * 检测JS文件是否存在
+     *
+     */
+    protected function js_file_exists($file)
+    {
+        return file_exists(public_path()."static/assets/js/backend/".$file.".js");
     }
 
     protected function validate(array $data, $validate, array $message = [], bool $batch = false)

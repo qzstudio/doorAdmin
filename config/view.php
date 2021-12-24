@@ -23,7 +23,7 @@ return [
     // 标签库标签结束标记
     'taglib_end'    => '}',
     'tpl_replace_string' => [
-        '{__CDN__}'     => '',
+        '__CDN__'     => '',
         '{__PUBLIC__}'     => '',
         // '__STATIC__' => Env::get('FunAdmin.static', '/static'),
         '__ADDONS__'     => '/static/addons',
