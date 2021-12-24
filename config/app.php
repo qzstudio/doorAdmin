@@ -11,15 +11,15 @@ return [
     // 是否启用路由
     'with_route'       => true,
     // 默认应用
-    'default_app'      => 'index',
+    'default_app'      => 'frontend',
     // 默认时区
     'default_timezone' => 'Asia/Shanghai',
 
     // 应用映射（自动多应用模式有效）
-    'app_map'          => [],
+    'app_map'          => ['common','backend'],
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [
-        'admin' => 'admin',
+        'admin' => 'backend',
     ],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => [],
@@ -31,4 +31,6 @@ return [
     'error_message'    => '页面错误！请稍后再试～',
     // 显示错误信息
     'show_error_msg'   => false,
+    //版本
+    'version' => '2.1.0',
 ];
