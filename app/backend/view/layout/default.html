@@ -6,14 +6,12 @@
 </head>
 <script>
     window.Config = {:json_encode($config)};
-    /*window.Config.formData = {:isset($formData)?(json_encode($formData)):'""'},
-    window.STATIC ='__STATIC__'
-    window.ADDONS = '__ADDONS__'
-    window.PLUGINS = '__PLUGINS__';*/
+        /*window.Config.formData = {:isset($formData)?(json_encode($formData)):'""'},
+        window.STATIC ='__STATIC__'
+        window.ADDONS = '__ADDONS__'
+        window.PLUGINS = '__PLUGINS__';*/
 </script>
 <body class="layui-layout-body">
-    {__CONTENT__}
-    
-    {include file="common/script" /}
+    {__CONTENT__} {include file="common/script" /}
 </body>
 </html>

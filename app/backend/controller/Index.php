@@ -11,9 +11,6 @@ use think\facade\Session;
 use app\common\controller\Backend;
 
 
-
-
-
 class Index extends Backend
 {
     protected $noNeedLogin = ['login'];

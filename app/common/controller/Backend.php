@@ -211,7 +211,7 @@ class Backend extends BaseController
 
         // 上传信息配置后
         Event::trigger('upload_config_init', $upload);
-        
+
         // 配置信息
         $config = [
             'site'           => array_intersect_key($site, array_flip(['name', 'indexurl', 'cdnurl', 'version', 'timezone', 'languages'])),
@@ -224,7 +224,7 @@ class Backend extends BaseController
             'language'       => $lang,
             'referer'        => Session::get("referer")
         ];
-        
+
         $config = array_merge($config, Config::get("view_replace_str"));
 
         Config::set(array_merge(Config::get('upload'), $upload), 'upload');
